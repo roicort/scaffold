@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+type Action = {
+	label: string;
+	href: string;
+	variant?: 'primary' | 'secondary';
+};
+
+interface Props {
+	title: string;
+	description?: string;
+	eyebrow?: string;
+	actions?: Action[];
+}
+
+const { title, description, eyebrow, actions = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+    <slot />
+</BaseLayout>
