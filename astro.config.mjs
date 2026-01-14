@@ -2,6 +2,7 @@
 
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import pagefind from "astro-pagefind";
 import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -12,7 +13,7 @@ import icon from "astro-icon";
 export default defineConfig({
   site: "https://roicort.github.io",
   base: "/scaffold",
-  integrations: [mdx(), sitemap(), icon()],
+  integrations: [mdx(), sitemap(), pagefind(), icon()],
 
   vite: {
     plugins: [tailwindcss()],
