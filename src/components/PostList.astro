@@ -53,6 +53,7 @@ if (posts.length === 0) {
     );
 }
 
+const subpath = import.meta.env.BASE_URL
 
 const visiblePosts = typeof limit === "number" ? posts.slice(0, limit) : posts;
 
@@ -80,7 +81,7 @@ const visiblePosts = typeof limit === "number" ? posts.slice(0, limit) : posts;
                         console.log(p);
                         const id = (post as any).id;
                         const href = id
-                            ? `/blog/${id}`
+                            ? `${subpath}/blog/${id}`
                             : (p.href ?? undefined);
                         const rawDate = p.pubDate ?? null;
                         const pubDate = rawDate
@@ -104,7 +105,7 @@ const visiblePosts = typeof limit === "number" ? posts.slice(0, limit) : posts;
                 }
                 <Card
                     title={viewAllLabel}
-                    href={`${viewAllHref}`}
+                    href={`${subpath}${viewAllHref}`}
                     variant="post"
                 />
             </div>
