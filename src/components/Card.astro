@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+
+type Variant = 'post' | 'default';
+
+interface Props {
+	title: string;
+	href?: string;
+	description?: string;
+	date?: Date | string;
+	image?: ImageMetadata | string;
+	imageAlt?: string;
+	eyebrow?: string;
+	variant?: Variant;
+}
+
+const {
+	title,
+	href,
+	description,
+	date,
+	image,
+	imageAlt = '',
+	eyebrow,
+	variant = 'default',
+} = Astro.props as Props;
+
+const baseDate = typeof date === 'string' ? new Date(date) : date;
+const isPost = variant === 'post';
+const articleClass = isPost ? 'post-card flex flex-col gap-4 h-full' : 'card flex flex-col gap-3 h-full';
+---
+
+<article class={articleClass}>
+	{image && (
+		<figure>
+			{typeof image === 'string' ? (
+				<img src={image} alt={imageAlt} loading="lazy" />
+			) : (
+				<Image src={image} alt={imageAlt} loading="lazy" />
+			)}
+		</figure>
+	)}
+
+	{eyebrow && <p class="text-[0.65rem] uppercase tracking-[0.4em] text-subtle">{eyebrow}</p>}
+
+	{isPost && baseDate && (
+		<p class="post-card-date">
+			<FormattedDate date={baseDate} />
+		</p>
+	)}
+
+	<h3 class="text-xl font-semibold leading-tight">
+		{href ? (
+			<a class="hover:text-ink" href={href}>
+				{title}
+			</a>
+		) : (
+			<span>{title}</span>
+		)}
+	</h3>
+
+	{description && <p class="text-sm text-muted">{description}</p>}
+
+	<div class="mt-auto">
+		<slot />
+	</div>
+
+	{isPost && (
+		<div class="mt-2 flex items-center justify-between text-subtle text-[0.7rem] uppercase tracking-[0.4em]">
+			<span>Read story</span>
+			<span aria-hidden="true" class="text-lg">
+				→
+			</span>
+		</div>
+	)}
+</article>

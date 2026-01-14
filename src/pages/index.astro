@@ -1,90 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
 import PageLayout from '../layouts/PageLayout.astro';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-const heroActions = [
-	{ label: 'Explore services', href: '#services' },
-	{ label: 'Read the journal', href: '/blog', variant: 'secondary' },
-];
-const serviceHighlights = [
-	{
-		title: 'Product strategy',
-		description: 'We turn complex problems into clear roadmaps, prioritizing impact ahead of deliverables.',
-	},
-	{
-		title: 'Design systems',
-		description: 'Component libraries, shared guidelines, and guardrails that keep every launch on brand.',
-	},
-	{
-		title: 'Engineering partnerships',
-		description: 'Blending empathy with engineering rigor to ship resilient digital products and APIs.',
-	},
-];
+import Hero from '../components/Hero.astro';
+import PostList from '../components/PostList.astro';
 ---
 
 <PageLayout
 	title="Studio scaffolding"
-	description="An agency + blog starter kit that keeps the scaffolding in place so you can focus on the work."
-	eyebrow="Agency"
-	actions={heroActions}
 >
-	<section id="services" class="space-y-6">
-		<div class="space-y-1">
-			<p class="eyebrow">Capabilities</p>
-			<h2 class="text-3xl font-semibold">What we deliver</h2>
-			<p class="text-base text-muted max-w-3xl">
-				Strategy, systems, and engineering partnerships that keep ambitious launches efficient without losing craft.
-			</p>
-		</div>
-		<div class="grid gap-6 md:grid-cols-3">
-			{serviceHighlights.map((highlight) => (
-				<article class="card flex flex-col gap-3">
-					<div class="text-[0.65rem] uppercase tracking-[0.4em] text-subtle">Studio capability</div>
-					<h3 class="text-xl font-semibold leading-tight">{highlight.title}</h3>
-					<p class="text-sm text-muted">{highlight.description}</p>
-				</article>
-			))}
-		</div>
-	</section>
+	<Hero
+		eyebrow="Welcome to Blueprint Studio"
+		title="A modern Astro scaffolding for agencies and content creators."
+		description="Kickstart your next project with a solid foundation, featuring a blog, project showcases, and dark mode support."
+		actions={[{ label: 'View Blog', href: '/blog' }]}
+	/>
 
-	<section class="space-y-6">
-		<div class="flex flex-wrap items-end justify-between gap-4 border-t border-black/10 pt-6">
-			<div>
-				<p class="eyebrow">Journal</p>
-				<h2 class="text-3xl font-semibold">Recent thinking</h2>
-			</div>
-			<a
-				class="text-[0.6rem] uppercase tracking-[0.6em] text-muted hover:text-ink"
-				aria-label="View archive"
-				href="/blog"
-			>
-				Archive ↗
-			</a>
-		</div>
-		<div class="grid gap-6 md:grid-cols-2">
-			{posts.slice(0, 4).map((post) => (
-				<article class="post-card flex h-full flex-col gap-4">
-					<p class="post-card-date">
-						<FormattedDate date={post.data.pubDate} />
-					</p>
-					<h3 class="text-2xl font-semibold leading-tight">
-						<a class="hover:text-ink" href={`/blog/${post.id}/`}>
-							{post.data.title}
-						</a>
-					</h3>
-					<p class="text-sm text-muted">{post.data.description}</p>
-					<div class="mt-auto flex items-center justify-between">
-						<span class="text-[0.65rem] uppercase tracking-[0.4em] text-subtle">Read story</span>
-						<span aria-hidden="true" class="text-lg">
-							→
-						</span>
-					</div>
-				</article>
-			))}
-		</div>
-	</section>
+	<PostList
+		heading="Blog"
+		limit={6}
+		viewAllHref="/blog"
+	/>
+		
 </PageLayout>

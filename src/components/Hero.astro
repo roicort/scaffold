@@ -1,0 +1,32 @@
+---
+interface Action {
+	label: string;
+	href: string;
+}
+
+interface Props {
+	eyebrow?: string;
+	title: string;
+	description?: string;
+	actions?: Action[];
+}
+
+const { eyebrow, title, description, actions = [] } = Astro.props;
+---
+
+<section class="min-h-screen flex items-center md:px-8">
+	<div class="grid gap-3 md:gap-4 max-w-3xl pb-6 md:pb-10">
+		{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+		<h1 class="text-4xl md:text-5xl lg:text-6xl leading-tight m-0">{title}</h1>
+		{description && <p class="text-muted text-base md:text-lg max-w-2xl m-0">{description}</p>}
+		{actions.length > 0 && (
+			<div class="flex flex-wrap gap-3 mt-3">
+				{actions.map((action) => (
+					<a class="button primary" href={action.href}>
+						{action.label}
+					</a>
+				))}
+			</div>
+		)}
+	</div>
+</section>
