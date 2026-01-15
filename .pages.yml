@@ -52,6 +52,37 @@ content:
         type: string
         list: true
 
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: '{primary}.md'
+    view:
+      fields: [title, pubDate, updatedDate]
+      sort: [pubDate]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+        required: true
+      - name: pubDate
+        label: Published
+        type: date
+        required: true
+      - name: updatedDate
+        label: Updated
+        type: date
+      - name: heroImage
+        label: Hero image
+        type: image
+
   - name: authors
     label: Authors
     type: collection
