@@ -78,13 +78,13 @@ const iconMap: Record<string, string> = {
         <div class="flex flex-wrap items-center gap-3 md:justify-end">
           <p class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink m-0">México City</p>
           <Clock
-            label=""
             timeZone="America/Mexico_City"
             locale="es-MX"
-            class="text-sm font-semibold text-ink"
+            hour12={false}
+            showSeconds={false}
           />
         </div>
-        <p class="text-sm text-subtle m-0">Designed by Rodrigo Cortez @ Morelia.</p>
+        <p class="text-sm text-subtle m-0">Designed by <a href="https://roicort.github.io" target="_blank" rel="noreferrer" class="underline">Rodrigo Cortez</a> in Morelia.</p>
       </div>
     </div>
   </div>
