@@ -3,14 +3,11 @@
 
 import { getEntry } from 'astro:content';
 
-export const SITE_TITLE = 'Launchpad';
-export const SITE_DESCRIPTION = 'A modern Astro scaffolding for agencies and studios.';
-
 export async function getSite() {
 	// Try to read the `site` entry and fallback to constants
 	const entry = await getEntry('site', 'site');
 	return {
-		title: entry?.data.title ?? SITE_TITLE,
-		description: entry?.data.description ?? SITE_DESCRIPTION,
+		title: entry?.data.title,
+		description: entry?.data.description,
 	};
 }

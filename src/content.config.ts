@@ -17,20 +17,6 @@ const blog = defineCollection({
 		}),
 });
 
-const projects = defineCollection({
-	// Load Markdown and MDX files in the `src/content/projects/` directory.
-	loader: glob({ base: './src/content/projects', pattern: '**/*.{md,mdx}' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
-			heroImage: image().optional(),
-			tags: z.array(z.string()).default([]),
-		}),
-});
-
 const authors = defineCollection({
 	loader: glob({ base: './src/content/authors', pattern: '**/*.yml' }),
 	schema: ({ image }) =>
@@ -55,11 +41,11 @@ const socials = defineCollection({
 });
 
 const site = defineCollection({
-	loader: file('src/site.yml'),
+	loader: file('src/site-config.yml'),
 	schema: z.object({
 		title: z.string(),
-		description: z.string().optional(),
+		description: z.string(),
 	}),
 });
 
-export const collections = { blog, projects, socials, authors, site };
+export const collections = { blog, socials, authors, site };

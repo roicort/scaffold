@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Card from '../../components/Card.astro';
 import PageLayout from '../../layouts/PageLayout.astro';
-import { getSite } from '../../consts';
+import { getSite } from '../../utils/consts';
 import { slugify, withBase } from '../../utils/slugify';
 
 const site = await getSite();

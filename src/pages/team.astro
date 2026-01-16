@@ -5,8 +5,6 @@ import { getCollection } from 'astro:content';
 
 const authorsEntries = await getCollection('authors');
 const team = authorsEntries.map((entry) => entry.data);
-
-console.log(team);
 ---
 
 <PageLayout
