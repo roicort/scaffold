@@ -12,17 +12,17 @@ const projects = (await getCollection('projects')).sort(
 const site = await getSite();
 ---
 
-<PageLayout title={`Projects · ${site.title}`} description="Explora estudios de caso y builds recientes.">
+<PageLayout title={`Projects · ${site.title}`} description="Explore case studies and recent builds.">
 	<section class="content-shell py-12 space-y-10">
 		<header class="space-y-2">
-			<p class="text-sm uppercase tracking-[0.35em] text-muted">Proyectos</p>
-			<h1 class="text-4xl font-semibold text-ink">Historias de producto y experiencias recientes</h1>
+			<p class="text-sm uppercase tracking-[0.35em] text-muted">Projects</p>
+			<h1 class="text-4xl font-semibold text-ink">Product stories and recent experiences</h1>
 			<p class="text-muted max-w-3xl">
-				Compartir resultados, aprendizajes y estructuras de diseño que impulsan equipos creativos y técnicos.
+				Sharing results, learnings, and design structures that power creative and technical teams.
 			</p>
 		</header>
 		{projects.length === 0 ? (
-			<p class="text-muted">No hay proyectos publicados todavía.</p>
+			<p class="text-muted">No projects published yet.</p>
 		) : (
 			<div class="space-y-6">
 				{projects.map((project) => (
