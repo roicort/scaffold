@@ -27,7 +27,7 @@ const site = await getSite();
 			<div class="space-y-6">
 				{projects.map((project) => (
 					<a
-						class="group block w-full overflow-hidden rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-5 shadow-[0_10px_30px_color-mix(in_oklab,var(--color-ink)_15%,transparent)] transition duration-200 hover:-translate-y-[2px] hover:shadow-[0_18px_45px_color-mix(in_oklab,var(--color-ink)_25%,transparent)] md:flex md:items-center md:gap-6"
+						class="group block w-full overflow-hidden rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-5 shadow-none transition duration-200 hover:-translate-y-[2px] hover:shadow-[0_18px_45px_color-mix(in_oklab,var(--color-ink)_25%,transparent)] md:flex md:items-center md:gap-6"
 						href={withBase(`/projects/${project.id}/`)}
 					>
 						<div class="flex flex-1 flex-col">
