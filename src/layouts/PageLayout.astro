@@ -5,5 +5,7 @@ const { title, description } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
-    <slot />
+    <div class="flex flex-col space-y-16 pb-16 min-h-[calc(100vh-var(--grid-cell))]">
+        <slot />
+    </div>
 </BaseLayout>

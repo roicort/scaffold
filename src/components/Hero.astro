@@ -16,8 +16,8 @@ import { withBase } from '../utils/slugify';
 const { eyebrow, title, description, actions = [] } = Astro.props;
 ---
 
-<section class="min-h-screen flex items-center">
-	<div class="grid gap-3 md:gap-4 max-w-3xl pb-6 md:pb-10">
+<section class="content-shell min-h-[calc(100vh-var(--grid-cell))] flex items-center">
+	<div class="grid gap-4 max-w-3xl">
 		{eyebrow && <p class="eyebrow">{eyebrow}</p>}
 		<h1 class="text-4xl md:text-5xl lg:text-6xl leading-tight m-0">{title}</h1>
 		{description && <p class="text-muted text-base md:text-lg max-w-2xl m-0">{description}</p>}
