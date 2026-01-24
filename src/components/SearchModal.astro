@@ -9,6 +9,7 @@ import { Icon } from 'astro-icon/components';
 	aria-haspopup="dialog"
 	aria-controls="search-modal"
 	aria-expanded="false"
+	aria-label="Open search dialog"
 	class="header-button"
 >
 	<span class="sr-only">Open search dialog</span>
@@ -40,7 +41,9 @@ import { Icon } from 'astro-icon/components';
 				</button>
 			</div>
 		</div>
-		<Search id="search" className="pagefind-ui" uiOptions={{ showImages: false }} />
+		<div id="search-root" hidden>
+			<Search id="search" className="pagefind-ui" uiOptions={{ showImages: false }} />
+		</div>
 		<p class="search-modal__footnote">Powered by Pagefind. Start typing to search posts, pages, and team members.</p>
 	</div>
 </div>
@@ -61,9 +64,50 @@ const setSearchVisibility = (isOpen) => {
 	searchModal.classList.toggle('is-open', isOpen);
 	searchModal.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
 	searchModal.toggleAttribute('inert', !isOpen);
+	// hide or show the actual Search component so there are no focusable descendants in the DOM while closed
+	const searchRoot = document.getElementById('search-root');
+	if (searchRoot) searchRoot.hidden = !isOpen;
 	if (searchToggle) searchToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 	document.body.classList.toggle('search-open', isOpen);
+
+	// Ensure focusable descendants are not reachable while the dialog is hidden
+	const focusableSelector = 'a, button, input, textarea, select, [tabindex]';
+	const nodes = searchModal.querySelectorAll(focusableSelector);
+	nodes.forEach((node) => {
+		if (isOpen) {
+			// restore previous tabindex if it was stored
+			if (node.dataset.oldTabindex !== undefined) {
+				if (node.dataset.oldTabindex === 'null') node.removeAttribute('tabindex');
+				else node.setAttribute('tabindex', node.dataset.oldTabindex);
+				delete node.dataset.oldTabindex;
+			}
+		} else {
+			// store current tabindex then set -1 to prevent focus
+			node.dataset.oldTabindex = node.hasAttribute('tabindex') ? node.getAttribute('tabindex') : 'null';
+			node.setAttribute('tabindex', '-1');
+		}
+	});
 };
+
+// Helper to add missing aria attributes to Pagefind UI when it mounts
+const addAriaToPagefind = () => {
+	const clearBtn = document.querySelector('#search-modal .pagefind-ui__search-clear');
+	if (clearBtn && !clearBtn.hasAttribute('aria-label')) {
+		clearBtn.setAttribute('aria-label', 'Clear search');
+		clearBtn.setAttribute('title', 'Clear search');
+	}
+};
+
+// Observe mutations to detect when Pagefind renders its UI and then enhance it
+const ensurePagefindEnhancements = () => {
+	addAriaToPagefind();
+	const mo = new MutationObserver(addAriaToPagefind);
+	if (searchModal) mo.observe(searchModal, { childList: true, subtree: true });
+};
+
+// Ensure modal is in the closed/hidden state on load and run enhancements
+setTimeout(() => setSearchVisibility(false), 0);
+ensurePagefindEnhancements();
 
 const focusSearchInput = () => {
 	const input = document.querySelector('#search-modal .pagefind-ui__search-input');
@@ -184,8 +228,9 @@ window.addEventListener('keydown', (event) => {
 	min-width: 42px;
 	padding: 0.35rem 0.5rem;
 	border-radius: 10px;
-	border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
-	background: color-mix(in oklab, var(--color-surface, #fff) 85%, var(--color-ink, #111) 4%);
+	border: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+	background: color-mix(in oklab, var(--color-ink) 12%, var(--color-surface));
+	color: var(--color-ink);
 	font-size: 0.72rem;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;

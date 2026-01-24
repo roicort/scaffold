@@ -22,9 +22,21 @@ const { title = site.title, description = site.description, image } = Astro.prop
     </head>
     <body>
         <Header />
-        <main class="content-shell" style="padding-top: calc(var(--grid-cell) * 1);">
+        <main class="content-shell">
             <slot />
         </main>
         <Footer />
     </body>
 </html>
+
+<style>
+    .content-shell {
+        padding-top: calc(var(--grid-cell) * 1);
+    }
+
+    @media (max-width: 720px) {
+        .content-shell {
+            padding-top: calc(var(--grid-cell) * 4);
+        }
+    }
+</style>

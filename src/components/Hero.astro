@@ -16,7 +16,7 @@ import { withBase } from '../utils/slugify';
 const { eyebrow, title, description, actions = [] } = Astro.props;
 ---
 
-<section class="content-shell min-h-[calc(100vh-var(--grid-cell))] flex items-center">
+<section class="content-shell flex items-center">
 	<div class="grid gap-4 max-w-3xl">
 		{eyebrow && <p class="eyebrow">{eyebrow}</p>}
 		<h1 class="text-4xl md:text-5xl lg:text-6xl leading-tight m-0">{title}</h1>
@@ -32,3 +32,15 @@ const { eyebrow, title, description, actions = [] } = Astro.props;
 		)}
 	</div>
 </section>
+
+<style>
+	.content-shell {
+		min-height: calc(100vh - calc(var(--grid-cell) * 1));
+	}
+
+	@media (max-width: 720px) {
+		.content-shell {
+			min-height: calc(100vh - calc(var(--grid-cell) * 4));
+		}
+	}
+</style>
