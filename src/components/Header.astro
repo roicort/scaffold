@@ -161,10 +161,9 @@ const subpath = import.meta.env.BASE_URL;
 
   header {
 		min-height: calc(var(--grid-cell) * 1);
-		background: color-mix(in oklab, var(--color-surface) 90%, transparent);
+		background: color-mix(in oklab, var(--color-surface) 80%, transparent);
 		-webkit-backdrop-filter: blur(14px);
 		backdrop-filter: blur(14px);
-		box-shadow: 0 18px 60px color-mix(in oklab, var(--color-ink, #111) 12%, transparent);
   }
 
   /* Make header taller on small screens (2 grid cells) */
@@ -175,7 +174,7 @@ const subpath = import.meta.env.BASE_URL;
 
 	  /* Ensure vertical padding on the content shell when mobile nav is open */
 	  html[data-nav='open'] .content-shell {
-		padding-top: 1rem; 
+		padding-top: 1rem;
 		padding-bottom: 1rem;
 	  }
   }
